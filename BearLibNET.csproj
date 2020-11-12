@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>2.0.0</Version>
+    <Authors>Evan Burkey</Authors>
+    <Product />
+    <Company />
+    <Description>BearLibTerminal wrapper for .NET 5</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/eburkey/BearLibNET</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/eburkey/BearLibNET</RepositoryUrl>
+  </PropertyGroup>
+
+</Project>
