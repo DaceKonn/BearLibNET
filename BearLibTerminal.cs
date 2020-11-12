@@ -1,6 +1,7 @@
 ﻿/*
 * BearLibTerminal C# wrapper
 * Copyright (C) 2013-2017 Cfyz
+* Modified 2020 Evan Burkey <evan@burkey.co>
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -22,11 +23,9 @@
 
 using System;
 using System.Text;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using BearLibNET;
 
-namespace BearLib
+namespace BearLibNET
 {
     public static class Terminal
     {
