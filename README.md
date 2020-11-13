@@ -36,7 +36,6 @@ namespace Example
 }
 ```
 
-To see a more complete example, check out my new open source roguelike [Derelict](https://github.com/eburkey/derelict)
 
 # Licensing
 
