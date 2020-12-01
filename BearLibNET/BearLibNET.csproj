@@ -4,13 +4,14 @@
     <TargetFramework>net5.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Version>2.1.0</Version>
-    <Authors>Piotr Wolny, Evan Burkey</Authors>
+    <Authors>Piotr "DaceKonn" Wolny, Evan Burkey</Authors>
     <Product />
     <Company />
     <Description>BearLibTerminal wrapper for .NET 5</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/DaceKonn/BearLibNET</PackageProjectUrl>
     <RepositoryUrl>https://github.com/DaceKonn/BearLibNET</RepositoryUrl>
+    <PackageId>DaceKonn.BearLibNET</PackageId>
   </PropertyGroup>
 
   <ItemGroup>
