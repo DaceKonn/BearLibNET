@@ -3,14 +3,41 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>2.0.2</Version>
-    <Authors>Evan Burkey, Piotr Wolny</Authors>
+    <Version>2.1.0</Version>
+    <Authors>Piotr Wolny, Evan Burkey</Authors>
     <Product />
     <Company />
     <Description>BearLibTerminal wrapper for .NET 5</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://git.sr.ht/~eburkey/BearLibNET</PackageProjectUrl>
-    <RepositoryUrl>https://git.sr.ht/~eburkey/BearLibNET</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/DaceKonn/BearLibNET</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/DaceKonn/BearLibNET</RepositoryUrl>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\BearLibTerminal.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\BearLibTerminal.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Pack>true</Pack>
+      <PackagePath>lib\$(TargetFramework)</PackagePath>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
 
 </Project>
