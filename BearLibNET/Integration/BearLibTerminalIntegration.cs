@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace BearLibNET
+namespace BearLibNET.Integration
 {
     internal sealed class BearLibTerminalIntegration
     {

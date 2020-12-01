@@ -1,6 +1,7 @@
 ﻿using System;
 using BearLibNET;
 using TKCodes = BearLibNET.TKCodes;
+using TerminalT = BearLibNET.Terminal.Typed;
 
 namespace TestConsole
 {
@@ -31,18 +32,14 @@ namespace TestConsole
                     else
                     {
                         _ = Terminal.Print(2, 2, $"{Enum.GetName(typeof(TKCodes.InputEvents), input)}");
-                        Terminal.Print(2,3, $"{ Terminal.State((int)TKCodes.InputStates.TK_MOUSE_CLICKS)}");
+                        Terminal.Print(2,3, $"{ TerminalT.State(TKCodes.InputStates.TK_MOUSE_CLICKS)}");
+                        Terminal.Print(2, 4, $"{ TerminalT.State(TKCodes.InputEvents.TK_1)}");
 
-                        try
-                        {
-                            Terminal.Print(2, 4, $"{ Terminal.State((int)TKCodes.InputEvents.TK_1)}");
-                        }
-                        catch (Exception e)
-                        {
-                            Console.WriteLine(e);
-                        }
+                        Terminal.Print(2, 5, $"{ Helpers.CheckCodeType(input)?.Name}");
 
                         Terminal.Refresh();
+
+                        TerminalT.Peek();
                     }
                 }
             }

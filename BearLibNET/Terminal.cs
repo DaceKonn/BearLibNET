@@ -23,6 +23,7 @@
 
 using BearLibNET.DefaultImplementations;
 using BearLibNET.Interfaces;
+using BearLibNET.Integration;
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -426,6 +427,25 @@ namespace BearLibNET
         public static IColor ColorFromName(string name)
         {
             return ColorFactory.FromArgb(BearLibTerminalIntegration.ColorFromName(name));
+        }
+
+        public class Typed
+        {
+            public static TKCodes.InputEvents Read() => (TKCodes.InputEvents)BearLibTerminalIntegration.Read();
+
+            public static TKCodes.InputEvents Peek() => (TKCodes.InputEvents)BearLibTerminalIntegration.Peek();
+
+            public static int State(TKCodes.InputEvents code) => BearLibTerminalIntegration.State((int)code);
+
+            public static int State(TKCodes.InputStates code) => BearLibTerminalIntegration.State((int)code);
+
+            public static int State(TKCodes.VirtualKeyCodes code) => BearLibTerminalIntegration.State((int)code);
+
+            public static bool Check(TKCodes.InputEvents code) => State(code) > 0;
+
+            public static bool Check(TKCodes.InputStates code) => State(code) > 0;
+
+            public static bool Check(TKCodes.VirtualKeyCodes code) => State(code) > 0;
         }
     }
 }
