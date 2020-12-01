@@ -2,14 +2,14 @@
 {
     public enum ContentAlignment
     {
-        TopLeft = 1,
-        TopCenter = 2,
-        TopRight = 4,
-        MiddleLeft = 16,
-        MiddleCenter = 32,
-        MiddleRight = 64,
-        BottomLeft = 256,
-        BottomCenter = 512,
-        BottomRight = 1024,
+        TopLeft = 5,
+        TopCenter = 7,
+        TopRight = 6,
+        MiddleLeft = 13,
+        MiddleCenter = 15,
+        MiddleRight = 14,
+        BottomLeft = 9,
+        BottomCenter = 11,
+        BottomRight = 10,
     }
 }

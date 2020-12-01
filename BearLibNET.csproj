@@ -13,4 +13,10 @@
     <RepositoryUrl>https://git.sr.ht/~eburkey/BearLibNET</RepositoryUrl>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="TestConsole\**" />
+    <EmbeddedResource Remove="TestConsole\**" />
+    <None Remove="TestConsole\**" />
+  </ItemGroup>
+
 </Project>

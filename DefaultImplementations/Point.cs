@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace BearLibNET
+namespace BearLibNET.DefaultImplementations
 {
-    public struct Point : IEquatable<Point>
+    public struct Point : IPoint, IEquatable<Point>
     {
         public Point(int x, int y)
         {
@@ -30,8 +30,8 @@ namespace BearLibNET
 
         public override int GetHashCode() => HashCode.Combine<int, int>(X, Y);
 
-        public static bool operator ==(Point left, Point right) => object.Equals((object)left, (object)right);
+        public static bool operator ==(Point left, Point right) => object.Equals(left, right);
 
-        public static bool operator !=(Point left, Point right) => !object.Equals((object)left, (object)right);
+        public static bool operator !=(Point left, Point right) => !object.Equals(left, right);
     }
 }

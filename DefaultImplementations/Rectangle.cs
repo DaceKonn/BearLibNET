@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace BearLibNET
+namespace BearLibNET.DefaultImplementations
 {
-    public struct Rectangle : IEquatable<Rectangle>
+    public struct Rectangle : IRectangle, IEquatable<Rectangle>
     {
         public Rectangle(int x, int y, int w, int h)
         {
@@ -36,10 +36,10 @@ namespace BearLibNET
             return obj.GetType() == GetType() && Equals((Rectangle)obj);
         }
 
-        public override int GetHashCode() => HashCode.Combine<int, int, int, int>(this.Width, this.Height, this.X, this.Y);
+        public override int GetHashCode() => HashCode.Combine<int, int, int, int>(Width, Height, X, Y);
 
-        public static bool operator ==(Rectangle left, Rectangle right) => object.Equals((object)left, (object)right);
+        public static bool operator ==(Rectangle left, Rectangle right) => object.Equals(left, right);
 
-        public static bool operator !=(Rectangle left, Rectangle right) => !object.Equals((object)left, (object)right);
+        public static bool operator !=(Rectangle left, Rectangle right) => !object.Equals(left, right);
     }
 }

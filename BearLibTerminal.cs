@@ -21,6 +21,8 @@
 * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+using BearLibNET.DefaultImplementations;
+using BearLibNET.Interfaces;
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -29,39 +31,40 @@ namespace BearLibNET
 {
     public static class Terminal
     {
+        private static IColorFactory colorFactory = null;
+        private static ISizeFactory sizeFactory = null;
 
-        private static string Format(string text, object[] args)
+        public static IColorFactory ColorFactory
         {
-            if (args != null && args.Length > 0)
-                return string.Format(text, args);
-            else
-                return text;
+            private get
+            {
+                if (colorFactory == null)
+                {
+                    colorFactory = new ColorFactory();
+                }
+                return colorFactory;
+            }
+
+            set
+            {
+                colorFactory = value;
+            }
         }
 
-        private static int LibraryAlignmentFromContentAlignment(ContentAlignment alignment)
+        public static ISizeFactory SizeFactory
         {
-            switch (alignment)
+            private get
             {
-                case ContentAlignment.TopLeft:
-                    return 5;
-                case ContentAlignment.TopCenter:
-                    return 7;
-                case ContentAlignment.TopRight:
-                    return 6;
-                case ContentAlignment.MiddleLeft:
-                    return 13;
-                case ContentAlignment.MiddleCenter:
-                    return 15;
-                case ContentAlignment.MiddleRight:
-                    return 14;
-                case ContentAlignment.BottomLeft:
-                    return 9;
-                case ContentAlignment.BottomCenter:
-                    return 11;
-                case ContentAlignment.BottomRight:
-                    return 10;
-                default:
-                    return 5;
+                if (sizeFactory == null)
+                {
+                    sizeFactory = new SizeFactory();
+                }
+                return sizeFactory;
+            }
+
+            set
+            {
+                sizeFactory = value;
             }
         }
 
@@ -115,7 +118,7 @@ namespace BearLibNET
             BearLibTerminalIntegration.ClearArea(x, y, w, h);
         }
 
-        public static void ClearArea(Rectangle area)
+        public static void ClearArea(IRectangle area)
         {
             ClearArea(area.X, area.Y, area.Width, area.Height);
         }
@@ -125,12 +128,12 @@ namespace BearLibNET
             BearLibTerminalIntegration.Crop(x, y, w, h);
         }
 
-        public static void Crop(Rectangle area)
+        public static void Crop(IRectangle area)
         {
             Crop(area.X, area.Y, area.Width, area.Height);
         }
 
-        public static void Color(Color color)
+        public static void Color(IColor color)
         {
             BearLibTerminalIntegration.Color(color.ToArgb());
         }
@@ -140,7 +143,7 @@ namespace BearLibNET
             BearLibTerminalIntegration.Color(BearLibTerminalIntegration.ColorFromName(name));
         }
 
-        public static void BkColor(Color color)
+        public static void BkColor(IColor color)
         {
             BearLibTerminalIntegration.BkColor(color.ToArgb());
         }
@@ -170,7 +173,7 @@ namespace BearLibNET
             BearLibTerminalIntegration.Put(x, y, code);
         }
 
-        public static void Put(Point location, int code)
+        public static void Put(IPoint location, int code)
         {
             Put(location.X, location.Y, code);
         }
@@ -180,7 +183,7 @@ namespace BearLibNET
             Put(x, y, (int)code);
         }
 
-        public static void Put(Point location, char code)
+        public static void Put(IPoint location, char code)
         {
             Put(location.X, location.Y, (int)code);
         }
@@ -190,7 +193,7 @@ namespace BearLibNET
             BearLibTerminalIntegration.PutExt(x, y, dx, dy, code, null);
         }
 
-        public static void PutExt(Point location, Point offset, int code)
+        public static void PutExt(IPoint location, IPoint offset, int code)
         {
             BearLibTerminalIntegration.PutExt(location.X, location.Y, offset.X, offset.Y, code, null);
         }
@@ -200,29 +203,29 @@ namespace BearLibNET
             BearLibTerminalIntegration.PutExt(x, y, dx, dy, code, null);
         }
 
-        public static void PutExt(Point location, Point offset, char code)
+        public static void PutExt(IPoint location, IPoint offset, char code)
         {
             BearLibTerminalIntegration.PutExt(location.X, location.Y, offset.X, offset.Y, code, null);
         }
 
-        public static void PutExt(int x, int y, int dx, int dy, int code, Color[] corners)
+        public static void PutExt(int x, int y, int dx, int dy, int code, IColor[] corners)
         {
             int[] values = new int[4];
             for (int i = 0; i < 4; i++) values[i] = corners[i].ToArgb();
             BearLibTerminalIntegration.PutExt(x, y, dx, dy, code, values);
         }
 
-        public static void PutExt(Point location, Point offset, int code, Color[] corners)
+        public static void PutExt(IPoint location, IPoint offset, int code, IColor[] corners)
         {
             PutExt(location.X, location.Y, offset.X, offset.Y, code, corners);
         }
 
-        public static void PutExt(int x, int y, int dx, int dy, char code, Color[] corners)
+        public static void PutExt(int x, int y, int dx, int dy, char code, IColor[] corners)
         {
             PutExt(x, y, dx, dy, (int)code, corners);
         }
 
-        public static void PutExt(Point location, Point offset, char code, Color[] corners)
+        public static void PutExt(IPoint location, IPoint offset, char code, IColor[] corners)
         {
             PutExt(location.X, location.Y, offset.X, offset.Y, (int)code, corners);
         }
@@ -232,7 +235,7 @@ namespace BearLibNET
             return Pick(x, y, 0);
         }
 
-        public static int Pick(Point location)
+        public static int Pick(IPoint location)
         {
             return Pick(location.X, location.Y, 0);
         }
@@ -242,87 +245,83 @@ namespace BearLibNET
             return BearLibTerminalIntegration.Pick(x, y, index);
         }
 
-        public static int Pick(Point location, int index)
+        public static int Pick(IPoint location, int index)
         {
             return Pick(location.X, location.Y, index);
         }
 
-        public static Color PickColor(int x, int y)
+        public static IColor PickColor(int x, int y)
         {
             return PickColor(x, y, 0);
         }
 
-        public static Color PickColor(Point location)
+        public static IColor PickColor(IPoint location)
         {
             return PickColor(location.X, location.Y, 0);
         }
 
-        public static Color PickColor(int x, int y, int index)
+        public static IColor PickColor(int x, int y, int index)
         {
-            return BearLibNET.Color.FromArgb(BearLibTerminalIntegration.PickColor(x, y, index));
+            return ColorFactory.FromArgb(BearLibTerminalIntegration.PickColor(x, y, index));
         }
 
-        public static Color PickColor(Point location, int index)
+        public static IColor PickColor(IPoint location, int index)
         {
             return PickColor(location.X, location.Y, index);
         }
 
-        public static Color PickBkColor(int x, int y)
+        public static IColor PickBkColor(int x, int y)
         {
-            return BearLibNET.Color.FromArgb(BearLibTerminalIntegration.PickBkColor(x, y));
+            return ColorFactory.FromArgb(BearLibTerminalIntegration.PickBkColor(x, y));
         }
 
-        public static Color PickBkColor(Point location)
+        public static IColor PickBkColor(IPoint location)
         {
             return PickBkColor(location.X, location.Y);
         }
 
-        public static Size Print(Rectangle layout, ContentAlignment alignment, string text, params object[] args)
+        public static ISize Print(IRectangle layout, ContentAlignment alignment, string text, params object[] args)
         {
-        	int width, height;
-        	BearLibTerminalIntegration.Print(layout.X, layout.Y, layout.Width, layout.Height, LibraryAlignmentFromContentAlignment(alignment), Format(text, args), out width, out height);
-        	return new Size(width, height);
+            BearLibTerminalIntegration.Print(layout.X, layout.Y, layout.Width, layout.Height, (int)alignment, Helpers.Format(text, args), out int width, out int height);
+            return new DefaultImplementations.Size(width, height);
         }
 
-        public static Size Print(Rectangle layout, string text, params object[] args)
+        public static ISize Print(IRectangle layout, string text, params object[] args)
         {
             return Print(layout, ContentAlignment.TopLeft, text, args);
         }
 
-        public static Size Print(Point location, ContentAlignment alignment, string text, params object[] args)
+        public static ISize Print(IPoint location, ContentAlignment alignment, string text, params object[] args)
         {
             return Print(location.X, location.Y, alignment, text, args);
         }
 
-        public static Size Print(Point location, string text, params object[] args)
+        public static ISize Print(IPoint location, string text, params object[] args)
         {
             return Print(location.X, location.Y, text, args);
         }
 
-        public static Size Print(int x, int y, ContentAlignment alignment, string text, params object[] args)
+        public static ISize Print(int x, int y, ContentAlignment alignment, string text, params object[] args)
         {
-            int width, height;
-            BearLibTerminalIntegration.Print(x, y, 0, 0, LibraryAlignmentFromContentAlignment(alignment), Format(text, args), out width, out height);
-            return new Size(width, height);
+            BearLibTerminalIntegration.Print(x, y, 0, 0, (int)alignment, Helpers.Format(text, args), out int width, out int height);
+            return SizeFactory.GetSize(width, height);
         }
 
-        public static Size Print(int x, int y, string text, params object[] args)
+        public static ISize Print(int x, int y, string text, params object[] args)
         {
-            int width, height;
-            BearLibTerminalIntegration.Print(x, y, 0, 0, 0, Format(text, args), out width, out height);
-            return new Size(width, height);
+            BearLibTerminalIntegration.Print(x, y, 0, 0, 0, Helpers.Format(text, args), out int width, out int height);
+            return SizeFactory.GetSize(width, height);
         }
 
-        public static Size Measure(Size bbox, string text, params object[] args)
+        public static ISize Measure(ISize bbox, string text, params object[] args)
         {
-            int width, height;
-            BearLibTerminalIntegration.Measure(bbox.Width, bbox.Height, Format(text, args), out width, out height);
-            return new Size(width, height);
+            BearLibTerminalIntegration.Measure(bbox.Width, bbox.Height, Helpers.Format(text, args), out int width, out int height);
+            return SizeFactory.GetSize(width, height);
         }
 
-        public static Size Measure(string text, params object[] args)
+        public static ISize Measure(string text, params object[] args)
         {
-            return Measure(new Size(), text, args);
+            return Measure(SizeFactory.GetSize(), text, args);
         }
 
         public static bool HasInput()
@@ -350,7 +349,7 @@ namespace BearLibNET
             return BearLibTerminalIntegration.ReadStr(x, y, text, max);
         }
 
-        public static int ReadStr(Point location, StringBuilder text, int max)
+        public static int ReadStr(IPoint location, StringBuilder text, int max)
         {
             return ReadStr(location.X, location.Y, text, max);
         }
@@ -363,7 +362,7 @@ namespace BearLibNET
             return result;
         }
 
-        public static int ReadStr(Point location, ref string text, int max)
+        public static int ReadStr(IPoint location, ref string text, int max)
         {
             return ReadStr(location.X, location.Y, ref text, max);
         }
@@ -383,18 +382,7 @@ namespace BearLibNET
             return Marshal.PtrToStringUni(BearLibTerminalIntegration.Get(name, default_value));
         }
 
-        private static object ParseSize(string s)
-        {
-            string[] parts = s.Split('x');
-            return new Size(int.Parse(parts[0]), int.Parse(parts[1]));
-        }
-
-        private static object ParseBool(string s)
-        {
-            return s == "true";
-        }
-
-        public static T Get<T>(string name, T default_value = default(T))
+        public static T Get<T>(string name, T default_value = default)
         {
             string result_str = Get(name);
             if (result_str.Length == 0)
@@ -407,13 +395,13 @@ namespace BearLibNET
                 {
                     Type type = typeof(T);
 
-                    if (type == typeof(Size))
+                    if (typeof(ISize).IsAssignableFrom(type))
                     {
-                        return (T)ParseSize(result_str);
+                        return (T)Helpers.ParseSize(SizeFactory, result_str);
                     }
                     else if (type == typeof(bool))
                     {
-                        return (T)ParseBool(result_str);
+                        return (T)Helpers.ParseBool(result_str);
                     }
                     else if (type.IsPrimitive)
                     {
@@ -435,9 +423,9 @@ namespace BearLibNET
             }
         }
 
-        public static Color ColorFromName(string name)
+        public static IColor ColorFromName(string name)
         {
-            return BearLibNET.Color.FromArgb(BearLibTerminalIntegration.ColorFromName(name));
+            return ColorFactory.FromArgb(BearLibTerminalIntegration.ColorFromName(name));
         }
     }
 }

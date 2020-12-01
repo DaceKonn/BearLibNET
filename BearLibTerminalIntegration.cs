@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace BearLibNET
 {
-    sealed class BearLibTerminalIntegration
+    internal sealed class BearLibTerminalIntegration
     {
         [DllImport("BearLibTerminal.dll", EntryPoint = "terminal_open", CallingConvention = CallingConvention.Cdecl)]
         public static extern bool Open();
