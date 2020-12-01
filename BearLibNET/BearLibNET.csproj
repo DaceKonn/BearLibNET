@@ -4,7 +4,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Version>2.0.2</Version>
-    <Authors>Evan Burkey</Authors>
+    <Authors>Evan Burkey, Piotr Wolny</Authors>
     <Product />
     <Company />
     <Description>BearLibTerminal wrapper for .NET 5</Description>
@@ -12,11 +12,5 @@
     <PackageProjectUrl>https://git.sr.ht/~eburkey/BearLibNET</PackageProjectUrl>
     <RepositoryUrl>https://git.sr.ht/~eburkey/BearLibNET</RepositoryUrl>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="TestConsole\**" />
-    <EmbeddedResource Remove="TestConsole\**" />
-    <None Remove="TestConsole\**" />
-  </ItemGroup>
 
 </Project>

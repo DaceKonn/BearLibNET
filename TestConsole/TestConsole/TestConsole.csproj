@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\BearLibNET.csproj" />
+    <ProjectReference Include="..\..\BearLibNET\BearLibNET.csproj" />
   </ItemGroup>
 
 </Project>
