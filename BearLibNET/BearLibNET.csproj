@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>2.1.0</Version>
+    <Version>2.1.1-alpha</Version>
     <Authors>Piotr "DaceKonn" Wolny, Evan Burkey</Authors>
     <Product />
     <Company />
@@ -12,33 +12,14 @@
     <PackageProjectUrl>https://github.com/DaceKonn/BearLibNET</PackageProjectUrl>
     <RepositoryUrl>https://github.com/DaceKonn/BearLibNET</RepositoryUrl>
     <PackageId>DaceKonn.BearLibNET</PackageId>
+    <IncludeSource>True</IncludeSource>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageOutputPath>../nupkgs</PackageOutputPath>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
-
+  
   <ItemGroup>
-    <None Remove="Resources\BearLibTerminal.dll" />
+    <Content Include="BearLibTerminal.dll" PackageCopyToOutput="true"/>
   </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="Resources\BearLibTerminal.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Pack>true</Pack>
-      <PackagePath>lib\$(TargetFramework)</PackagePath>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Properties\Resources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Update="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-
 </Project>
