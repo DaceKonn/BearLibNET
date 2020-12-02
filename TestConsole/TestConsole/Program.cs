@@ -7,7 +7,7 @@ namespace TestConsole
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             Terminal.Open();
             Console.WriteLine(Terminal.Set("input.filter = [keyboard, mouse]"));
