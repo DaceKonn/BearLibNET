@@ -6,10 +6,7 @@
     /// </summary>
     public enum InputStates
     {
-        /// <summary>
-        /// If key was released instead of pressed, it's code will be OR'ed withTK_KEY_RELEASED
-        /// </summary>
-        TK_KEY_RELEASED = 0x100,
+        
 
         /// <summary>
         /// Cusor <c>X</c> position in cells

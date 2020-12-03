@@ -6,7 +6,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DaceKonn.BearLibNET" Version="2.1.1-alpha" />
+    <None Remove="BearLibTerminal.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="BearLibTerminal.dll">
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\BearLibNET\BearLibNET.csproj" />
   </ItemGroup>
 
   <ItemGroup>

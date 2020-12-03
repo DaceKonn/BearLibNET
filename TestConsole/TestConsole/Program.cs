@@ -10,7 +10,7 @@ namespace TestConsole
         static void Main()
         {
             Terminal.Open();
-            Console.WriteLine(Terminal.Set("input.filter = [keyboard, mouse]"));
+            Console.WriteLine(Terminal.Set("input.filter = [keyboard+, mouse+]"));
             Terminal.Composition(true);
             Terminal.Clear();
             Terminal.Print(1, 1, "Hello World!");
@@ -23,9 +23,9 @@ namespace TestConsole
                 if (Terminal.HasInput())
                 {
                     Terminal.Clear();
-                    int input = Terminal.Read();
+                    TKCodes.InputEvents input = TerminalT.Read();
 
-                    if (input == (int)TKCodes.InputEvents.TK_CLOSE)
+                    if (input == TKCodes.InputEvents.TK_CLOSE)
                     {
                         escape = true;
                     }
@@ -35,11 +35,15 @@ namespace TestConsole
                         Terminal.Print(2,3, $"{ TerminalT.State(TKCodes.InputStates.TK_MOUSE_CLICKS)}");
                         Terminal.Print(2, 4, $"{ TerminalT.State(TKCodes.InputEvents.TK_1)}");
 
-                        Terminal.Print(2, 5, $"{ Helpers.CheckCodeType(input)?.Name}");
+                        Terminal.Print(2, 5, $"{ input }");
+                        //Terminal.Print(2, 6, $"{ Helpers.CheckCodeType(input) }");
+
+                        TKCodes.InputEvents flag = TKCodes.InputEvents.TK_A | TKCodes.InputEvents.TK_KEY_RELEASED;
+                        Terminal.Print(2, 7, $"Expect : { flag }");
+                        Terminal.Print(2, 8, $"Flagged : { input == flag }");
+                        Terminal.Print(2, 9, $"Release check : { (input & TKCodes.InputEvents.TK_KEY_RELEASED) != TKCodes.InputEvents.TK_INPUT_NONE}");
 
                         Terminal.Refresh();
-
-                        TerminalT.Peek();
                     }
                 }
             }

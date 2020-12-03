@@ -1,4 +1,6 @@
-﻿namespace BearLibNET.TKCodes
+﻿using System;
+
+namespace BearLibNET.TKCodes
 {
     /// <summary>
     /// Input events codes for:
@@ -8,6 +10,7 @@
     /// <item>window actions</item>
     /// </list>
     /// </summary>
+    [Flags]
     public enum InputEvents
     {
         /// <summary>
@@ -19,6 +22,11 @@
         /// Input result codes for terminal_read function.
         /// </summary>
         TK_INPUT_CANCELLED = -1,
+
+        /// <summary>
+        /// If key was released instead of pressed, it's code will be OR'ed withTK_KEY_RELEASED
+        /// </summary>
+        TK_KEY_RELEASED = 0x100,
 
         #region keyboard input evetns
 
