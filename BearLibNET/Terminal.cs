@@ -30,11 +30,24 @@ using System.Text;
 
 namespace BearLibNET
 {
+    /// <summary>
+    /// Base class for BearLibNEt that exposes the BearLibTerminal API
+    /// </summary>
     public static class Terminal
     {
         private static IColorFactory colorFactory = null;
         private static ISizeFactory sizeFactory = null;
 
+        /// <summary>
+        /// <para>The factory used to build IColor</para>
+        /// <para>See also:
+        /// <list type="bullet">
+        ///     <item><seealso cref="Interfaces.IColorFactory"/></item>
+        ///     <item><seealso cref="DefaultImplementations.SizeFactory"/></item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        /// <value>Injected implementation or Default ColorFactory implementation</value>
         public static IColorFactory ColorFactory
         {
             private get
@@ -52,6 +65,16 @@ namespace BearLibNET
             }
         }
 
+        /// <summary>
+        /// <para>The factory used to build ISize</para>
+        /// <para>See also:
+        /// <list type="bullet">
+        ///     <item><seealso cref="Interfaces.ISizeFactory"/></item>
+        ///     <item><seealso cref="DefaultImplementations.SizeFactory"/></item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        /// <value>Injected implementation or Default <see cref="DefaultImplementations.SizeFactory"/> implementation</value>
         public static ISizeFactory SizeFactory
         {
             private get
@@ -70,30 +93,34 @@ namespace BearLibNET
         }
 
         /// <summary>
-        /// Maps to:
-        /// <code>int terminal_open();</code>
+        /// <para>Maps to:
+        /// <code>int terminal_open();</code></para>
         /// 
-        /// This function initializes BearLibTerminal instance, configuring the window with default parameters:<br/>
-        /// <list>
-        ///     <item>- 80×25 cells</item>
-        ///     <item>- Fixedsys Excelsior font</item>
-        ///     <item>- white text</item>
-        ///     <item>- black background</item>
+        /// <para>This function initializes BearLibTerminal instance, configuring the window with default parameters:<br/>
+        /// <list type="bullet">
+        ///     <item>80×25 cells</item>
+        ///     <item>Fixedsys Excelsior font</item>
+        ///     <item>white text</item>
+        ///     <item>black background</item>
         /// </list>
-        /// This function does not bring the window to screen. The window is not shown until the first call to refresh.<br/>
-        /// Note that unless the library is initialized with successful call to open,<br/>
-        /// all other library functions will do nothing but return immediately with return code (if any) indicating an error.<br/>
-        /// <br/>
-        /// The function returns boolean value where false means initialization has failed.<br/>
-        /// Details may be found in the log file (named bearlibterminal.log by default).<br/>
+        /// This function does not bring the window to screen. The window is not shown until the first call to <see cref="Refresh"/>.
+        /// Note that unless the library is initialized with successful call to open,
+        /// all other library functions will do nothing but return immediately with return code (if any) indicating an error.</para>
+        /// 
+        /// <para>The function returns boolean value where false means initialization has failed.<br/>
+        /// Details may be found in the log file (named bearlibterminal.log by default).</para>
         /// 
         /// </summary>
         /// <returns>The function returns boolean value where false means initialization has failed.</returns>
+        /// 
         public static bool Open()
         {
             return BearLibTerminalIntegration.Open();
         }
 
+        /// <summary>
+        /// <para>Symmetric to <see cref="Open"/>, this function closes the window and deinitializes BearLibTerminal instance.</para>
+        /// </summary>
         public static void Close()
         {
             BearLibTerminalIntegration.Close();
@@ -104,6 +131,26 @@ namespace BearLibNET
             BearLibTerminalIntegration.Refresh();
         }
 
+        /// <summary>
+        /// <para>This is probably the most complex function in BearLibTerminal API.</para>
+        /// <para>Configuring library options and mechanics, managing fonts, tilesets and even configuration file is performed with it.</para>
+        /// <para>This method is transactional, if one of the options in the string fail, then all are rolledback.</para>
+        /// <example>
+        /// The function accepts a “configuration string” with various options described in it:
+        /// <code>
+        /// window.title='game';<br/>
+        /// font: UbuntuMono-R.ttf, size=12;<br/>
+        /// ini.settings.tile-size=16;<br/>
+        /// </code>
+        /// </example>
+        /// <para>More on configuration can be found here: 
+        /// <a href="http://foo.wyrd.name/en:bearlibterminal:reference:configuration">
+        /// http://foo.wyrd.name/en:bearlibterminal:reference:configuration
+        /// </a> 
+        /// </para>
+        /// </summary>
+        /// <param name="options">string containing options</param>
+        /// <returns>Returns True if all options from string were set</returns>
         public static bool Set(string options)
         {
             return BearLibTerminalIntegration.Set(options);
@@ -429,6 +476,9 @@ namespace BearLibNET
             return ColorFactory.FromArgb(BearLibTerminalIntegration.ColorFromName(name));
         }
 
+        /// <summary>
+        /// Exposes some of BearLibTerminal API but typed with Enums instad of integers
+        /// </summary>
         public class Typed
         {
             public static TKCodes.InputEvents Read() => (TKCodes.InputEvents)BearLibTerminalIntegration.Read();

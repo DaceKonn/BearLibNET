@@ -24,6 +24,11 @@ namespace BearLibNET
             return s == "true";
         }
 
+        /// <summary>
+        /// Check to which Enum the int Code belongs to
+        /// </summary>
+        /// <param name="code">int code to be checked</param>
+        /// <returns>typeof Enum or null</returns>
         public static Type CheckCodeType(int code)
         {
             if (Enum.IsDefined(typeof(TKCodes.InputEvents), code))
