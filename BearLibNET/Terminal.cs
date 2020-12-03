@@ -126,6 +126,18 @@ namespace BearLibNET
             BearLibTerminalIntegration.Close();
         }
 
+        /// <summary>
+        /// <para>This function commits the scene for output. It also has an effect of redrawing the scene.</para>
+        /// 
+        /// <para>BearLibTerminal does not draw to screen immediately upon <see cref="Put(int, int, int)"/> (and it's overloads) or <see cref="Print(int, int, ContentAlignment, string, object[])"/> (and it's overloads) calls.<br/>
+        /// Instead, the scene is constructed off-screen in a double-buffered manner.<br/>
+        /// If the contents of the window are destroyed for some reason (for example, the window has been obstructed and operating system asking it to refresh),<br/>
+        /// BearLibTerminal redraws an already commited “frontbuffer” scene. Only when this <see cref="Refresh"/> function is called the modified scene will be actually brought to screen.</para>
+        /// 
+        /// <para>The first call to this function since library initialization will show the window on screen.<br/>
+        /// Between the <see cref="Open"/> and first <see cref="Refresh"/> calls, the window stays invisible.</para>
+        /// 
+        /// </summary>
         public static void Refresh()
         {
             BearLibTerminalIntegration.Refresh();
@@ -156,26 +168,87 @@ namespace BearLibNET
             return BearLibTerminalIntegration.Set(options);
         }
 
+        /// <summary>
+        /// This function clears entire scene (all <see cref="Layer(int)">layers</see>). It also sets background color of every cell to the currently selected background color.
+        /// </summary>
         public static void Clear()
         {
             BearLibTerminalIntegration.Clear();
         }
 
+        /// <summary>
+        /// <para>This function clears a part of the currently selected <see cref="Layer(int)">layer</see>.<br/>
+        /// The arguments specify top-left corner and a size of a rectangular area to be cleared.<br/>
+        /// When called on the first layer, it also sets background color of affected cells to the currently selected background color.</para>
+        /// <para>
+        /// See also:
+        /// <list type="bullet">
+        /// <item><seealso cref="ClearArea(IRectangle)"/></item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="w"></param>
+        /// <param name="h"></param>
         public static void ClearArea(int x, int y, int w, int h)
         {
             BearLibTerminalIntegration.ClearArea(x, y, w, h);
         }
 
+        /// <summary>
+        /// <para>This function clears a part of the currently selected <see cref="Layer(int)">layer</see>.<br/>
+        /// The arguments specify top-left corner and a size of a rectangular area to be cleared.<br/>
+        /// When called on the first layer, it also sets background color of affected cells to the currently selected background color.</para>
+        /// <para>
+        /// See also:
+        /// <list type="bullet">
+        /// <item><seealso cref="ClearArea(int, int, int, int)"/></item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        /// <param name="area"></param>
         public static void ClearArea(IRectangle area)
         {
             ClearArea(area.X, area.Y, area.Width, area.Height);
         }
 
+        /// <summary>
+        /// <para>
+        /// This function sets a crop area of the current <see cref="Layer(int)">layer</see>.<br/>
+        /// Dimensions of the area are expressed in cells. <br/>
+        /// Cropping is disabled either by setting area's width or height to zero or by clearing entire scene with <see cref="Clear"/>.
+        /// </para>
+        /// <para>
+        /// See also:
+        /// <list type="bullet">
+        /// <item><seealso cref="Crop(IRectangle)"/></item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="w"></param>
+        /// <param name="h"></param>
         public static void Crop(int x, int y, int w, int h)
         {
             BearLibTerminalIntegration.Crop(x, y, w, h);
         }
 
+        /// <summary>
+        /// <para>
+        /// This function sets a crop area of the current <see cref="Layer(int)">layer</see>.<br/>
+        /// Dimensions of the area are expressed in cells. <br/>
+        /// Cropping is disabled either by setting area's width or height to zero or by clearing entire scene with <see cref="Clear"/>.
+        /// </para>
+        /// <para>
+        /// See also:
+        /// <list type="bullet">
+        /// <item><seealso cref="Crop(int, int, int, int)"/></item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        /// <param name="area"></param>
         public static void Crop(IRectangle area)
         {
             Crop(area.X, area.Y, area.Width, area.Height);
@@ -298,31 +371,126 @@ namespace BearLibNET
             return Pick(location.X, location.Y, index);
         }
 
+        /// <summary>
+        /// Returns a color of a tile in the specified cell.
+        /// <para>
+        /// See also:
+        /// <list type="bullet">
+        /// <item><seealso cref="PickColor(int, int, int)"/></item>
+        /// <item><seealso cref="PickColor(IPoint)"/></item>
+        /// <item><seealso cref="PickColor(IPoint, int)"/></item>
+        /// <item><seealso cref="PickBkColor(int, int)"/></item>
+        /// <item><seealso cref="PickBkColor(IPoint)"/></item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
         public static IColor PickColor(int x, int y)
         {
             return PickColor(x, y, 0);
         }
 
+        /// <summary>
+        /// Returns a color of a tile in the specified cell.
+        /// <para>
+        /// See also:
+        /// <list type="bullet">
+        /// <item><seealso cref="PickColor(int, int)"/></item>
+        /// <item><seealso cref="PickColor(int, int, int)"/></item>
+        /// <item><seealso cref="PickColor(IPoint, int)"/></item>
+        /// <item><seealso cref="PickBkColor(int, int)"/></item>
+        /// <item><seealso cref="PickBkColor(IPoint)"/></item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        /// <param name="location"></param>
+        /// <returns></returns>
         public static IColor PickColor(IPoint location)
         {
             return PickColor(location.X, location.Y, 0);
         }
 
+        /// <summary>
+        /// Returns a color of a tile in the specified cell.
+        /// <para>
+        /// See also:
+        /// <list type="bullet">
+        /// <item><seealso cref="PickColor(int, int)"/></item>
+        /// <item><seealso cref="PickColor(IPoint)"/></item>
+        /// <item><seealso cref="PickColor(IPoint, int)"/></item>
+        /// <item><seealso cref="PickBkColor(int, int)"/></item>
+        /// <item><seealso cref="PickBkColor(IPoint)"/></item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="index"></param>
+        /// <returns></returns>
         public static IColor PickColor(int x, int y, int index)
         {
             return ColorFactory.FromArgb(BearLibTerminalIntegration.PickColor(x, y, index));
         }
 
+        /// <summary>
+        /// Returns a color of a tile in the specified cell.
+        /// <para>
+        /// See also:
+        /// <list type="bullet">
+        /// <item><seealso cref="PickColor(int, int)"/></item>
+        /// <item><seealso cref="PickColor(int, int, int)"/></item>
+        /// <item><seealso cref="PickColor(IPoint)"/></item>
+        /// <item><seealso cref="PickBkColor(int, int)"/></item>
+        /// <item><seealso cref="PickBkColor(IPoint)"/></item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        /// <param name="location"></param>
+        /// <param name="index"></param>
+        /// <returns></returns>
         public static IColor PickColor(IPoint location, int index)
         {
             return PickColor(location.X, location.Y, index);
         }
 
+        /// <summary>
+        /// Returns a background color of the specified cell.
+        /// <para>
+        /// See also:
+        /// <list type="bullet">
+        /// <item><seealso cref="PickBkColor(IPoint)"/></item>
+        /// <item><seealso cref="PickColor(int, int)"/></item>
+        /// <item><seealso cref="PickColor(int, int, int)"/></item>
+        /// <item><seealso cref="PickColor(IPoint)"/></item>
+        /// <item><seealso cref="PickColor(IPoint, int)"/></item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
         public static IColor PickBkColor(int x, int y)
         {
             return ColorFactory.FromArgb(BearLibTerminalIntegration.PickBkColor(x, y));
         }
 
+        /// <summary>
+        /// Returns a background color of the specified cell.
+        /// <para>
+        /// See also:
+        /// <list type="bullet">
+        /// <item><seealso cref="PickBkColor(int, int)"/></item>
+        /// <item><seealso cref="PickColor(int, int)"/></item>
+        /// <item><seealso cref="PickColor(int, int, int)"/></item>
+        /// <item><seealso cref="PickColor(IPoint)"/></item>
+        /// <item><seealso cref="PickColor(IPoint, int)"/></item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        /// <param name="location"></param>
+        /// <returns></returns>
         public static IColor PickBkColor(IPoint location)
         {
             return PickBkColor(location.X, location.Y);
